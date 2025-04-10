@@ -1,3 +1,4 @@
+import * as React from "react"
 import { Card, CardDescription, CardTitle } from "./ui/card"
 
 export const CardInfo = ({title, date, bgcolor}:{title:string, date:number, bgcolor:string}) => {
