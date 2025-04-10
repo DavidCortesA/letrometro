@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✏️ Letrómetro
 
-## Getting Started
+Letrómetro es una herramienta web interactiva que analiza textos en tiempo real. Calcula el total de caracteres, palabras, frases, tiempo estimado de lectura y la densidad de letras más utilizadas. Ideal para escritores, creadores de contenido, y desarrolladores que necesiten controlar el contenido textual con precisión.
 
-First, run the development server:
+---
+
+## 🚀 Características
+
+- 📊 Conteo en vivo de:
+  - Caracteres (con opción para excluir espacios)
+  - Palabras
+  - Frases
+- ⏱ Estimación de tiempo de lectura
+- 🧠 Análisis de densidad de letras
+- ⚠️ Límite de caracteres opcional con advertencia visual
+- 🌗 Tema oscuro incluido
+- 🎨 Diseño responsive y accesible con Tailwind CSS
+
+---
+
+## 🧰 Tecnologías usadas
+
+- [Next.js 15](https://nextjs.org/)
+- [React 19](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Radix UI](https://www.radix-ui.com/)
+- [Lucide Icons](https://lucide.dev/)
+
+---
+
+## 🛠️ Instalación
+
+Clona el repositorio e instala las dependencias:
 
 ```bash
+git clone https://github.com/davidcortesa/letrometro.git
+cd letrometro
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Abre tu navegador en http://localhost:3000 y comienza a escribir.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+📦 Scripts disponibles
+npm run dev – Ejecuta el servidor de desarrollo con Turbopack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+npm run build – Compila la app para producción
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+npm start – Inicia el servidor de producción
 
-## Learn More
+npm run lint – Ejecuta ESLint
 
-To learn more about Next.js, take a look at the following resources:
+💡 Ideas futuras
+⌨️ Typetest: un modo para medir la velocidad de tecleo en tiempo real con estadísticas personalizadas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+👤 Autor
+Desarrollado por David Cortez
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📄 Licencia
+Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más información.
