@@ -38,6 +38,7 @@ cd letrometro
 npm install
 npm run dev
 Abre tu navegador en http://localhost:3000 y comienza a escribir.
+```
 
 📦 Scripts disponibles
 npm run dev – Ejecuta el servidor de desarrollo con Turbopack
