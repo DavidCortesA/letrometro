@@ -5,9 +5,9 @@ interface TypingTextProps {
 
 const TypingText: React.FC<TypingTextProps> = ({ text, charColors }) => {
   return (
-    <div className="whitespace-pre-wrap font-mono text-lg">
+    <div>
       {text.split('').map((char, index) => (
-        <span key={index} className={charColors[index]}>
+        <span key={index} style={{ color: charColors[index] }}>
           {char}
         </span>
       ))}

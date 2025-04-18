@@ -18,6 +18,7 @@ interface TypingTestState {
   isRunning: boolean;
   showResults: boolean;
   charColors: string[];
+  isFinished: boolean;
 }
 
 const initialState: TypingTestState = {
@@ -30,6 +31,7 @@ const initialState: TypingTestState = {
   isRunning: false,
   showResults: false,
   charColors: [],
+  isFinished: true,
 };
 
 export default function TypeTesting () {
@@ -42,9 +44,11 @@ export default function TypeTesting () {
   }, []);
 
   const generateRandomText = () => {
+    const generated = generate(textLength);
+    const newText = Array.isArray(generated) ? generated : [generated];
     setState((prev) => ({
       ...prev,
-      text: Array.isArray(generate(textLength)) ? generate(textLength)?.join(' ') : [generate(textLength)].join(' '),
+      text: newText.join(' '),
       inputText: '',
       correctChars: 0,
       incorrectChars: 0,
@@ -55,34 +59,41 @@ export default function TypeTesting () {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setState((prev) => ({ ...prev, inputText: value }));
-
-    if (!prev.isRunning && value.length > 0) {
-      setState((p) => ({ ...p, isRunning: true, startTime: Date.now() }));
-    }
-
-    const newCharColors = prev.text.split('').map((char, index) => {
-      if (index < value.length) {
-        return value[index] === char ? 'green' : 'red';
-      }
-      return '';
+  
+    setState((prev) => {
+      const isStarting = !prev.isRunning && value.length > 0;
+      const newCharColors = prev.text.split('').map((char, index) => {
+        if (index < value.length) {
+          return value[index] === char ? 'green' : 'red';
+        }
+        return '';
+      });
+      const correct = newCharColors.filter((color) => color === 'green').length;
+      const incorrect = newCharColors.filter((color) => color === 'red').length;
+      const isFinished = value.length === prev.text.length && prev.isRunning;
+      const endTime = isFinished ? Date.now() : prev.endTime;
+      const showResults = isFinished || prev.showResults;
+      const startTime = isStarting ? Date.now() : prev.startTime;
+      const isRunning = isStarting ? true : isFinished ? false : prev.isRunning;
+  
+      return {
+        ...prev,
+        inputText: value,
+        isRunning: isRunning,
+        startTime: startTime,
+        endTime: endTime,
+        correctChars: correct,
+        incorrectChars: incorrect,
+        charColors: newCharColors,
+        showResults: showResults,
+        isFinished: isFinished,
+      };
     });
-
-    setState((prev) => ({
-      ...prev,
-      charColors: newCharColors,
-      correctChars: newCharColors.filter((color) => color === 'green').length,
-      incorrectChars: newCharColors.filter((color) => color === 'red').length,
-    }));
-
-    if (value.length === prev.text.length) {
-      setState((p) => ({ ...p, isRunning: false, endTime: Date.now(), showResults: true }));
-    }
   };
 
   const handleStart = () => {
     generateRandomText();
-    setState((prev) => ({ ...prev, isRunning: true, startTime: Date.now(), endTime: null }));
+    setState((prev) => ({ ...prev, isRunning: true, startTime: Date.now(), endTime: null, isFinished: false, showResults: false }));
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -90,7 +101,7 @@ export default function TypeTesting () {
 
   const handleFinish = () => {
     if (state.isRunning) {
-      setState((prev) => ({ ...prev, isRunning: false, endTime: Date.now(), showResults: true }));
+      setState((prev) => ({ ...prev, isRunning: false, endTime: Date.now(), showResults: true, isFinished: true }));
     }
   };
 
@@ -124,7 +135,7 @@ export default function TypeTesting () {
           value={state.inputText}
           onChange={handleInputChange}
           placeholder="Escribe aquí..."
-          disabled={!state.isRunning && state.text.length > 0 && !state.showResults}
+          disabled={state.isFinished}
         />
       </div>
       <div className="flex justify-center gap-2 w-full">
